@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
+    "dev": "env -u NODE_OPTIONS next dev --turbopack",
+    "build": "env -u NODE_OPTIONS next build",
+    "start": "env -u NODE_OPTIONS next start",
     "lint": "next lint",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "format:prettierrc": "prettier --config .prettierrc --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
