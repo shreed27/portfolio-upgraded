@@ -1,10 +1,6 @@
 import { BlogContent } from '@/components/blog/BlogContent';
-import { BlogList } from '@/components/blog/BlogList';
 import Container from '@/components/common/Container';
 import FontSizeControls from '@/components/common/FontSizeControls';
-import ArrowLeft from '@/components/svgs/ArrowLeft';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
 import { siteConfig } from '@/config/Meta';
 import {
   getBlogPostBySlug,
@@ -78,37 +74,44 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     <>
       <Container className="py-16">
         <div className="space-y-12">
-          {/* Back Button */}
           <div>
-            <Button variant="ghost" asChild className="group">
-              <Link href="/blog" className="flex items-center space-x-2">
-                <ArrowLeft className="size-4" />
-                <span>Back to Blog</span>
-              </Link>
-            </Button>
+            <Link
+              href="/blog"
+              className="text-secondary hover:text-foreground text-sm underline underline-offset-4"
+            >
+              Back to Blog
+            </Link>
           </div>
 
-          {/* Blog Content */}
           <BlogContent frontmatter={post.frontmatter} content={post.content} />
 
-          {/* Related Posts */}
           {relatedPosts.length > 0 && (
-            <div className="space-y-6">
-              <Separator />
-              <div className="space-y-6">
-                <h2 className="text-2xl font-semibold">Related Posts</h2>
-                <BlogList posts={relatedPosts} />
+            <section className="border-t pt-8">
+              <h2 className="text-lg font-semibold tracking-tight">Related Posts</h2>
+              <div className="mt-4 divide-y">
+                {relatedPosts.map((relatedPost) => (
+                  <article key={relatedPost.slug} className="py-4 first:pt-0 last:pb-0">
+                    <Link
+                      href={`/blog/${relatedPost.slug}`}
+                      className="block hover:opacity-80"
+                    >
+                      <div className="grid gap-2 sm:grid-cols-[1fr_auto] sm:items-baseline">
+                        <div>
+                          <h3 className="font-medium">{relatedPost.frontmatter.title}</h3>
+                          <p className="text-secondary mt-1 text-sm">
+                            {relatedPost.frontmatter.description}
+                          </p>
+                        </div>
+                        <p className="text-secondary text-sm">
+                          {relatedPost.frontmatter.date}
+                        </p>
+                      </div>
+                    </Link>
+                  </article>
+                ))}
               </div>
-            </div>
+            </section>
           )}
-
-          {/* Back to Blog CTA */}
-          <div className="text-center">
-            <Separator className="mb-8" />
-            <Button asChild size="lg">
-              <Link href="/blog">View All Blogs</Link>
-            </Button>
-          </div>
         </div>
       </Container>
       <FontSizeControls />
