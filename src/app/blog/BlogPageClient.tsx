@@ -1,11 +1,9 @@
 'use client';
 
-import { BlogList } from '@/components/blog/BlogList';
 import Container from '@/components/common/Container';
-import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
 import { useHapticFeedback } from '@/hooks/use-haptic-feedback';
 import { BlogPostPreview } from '@/types/blog';
+import { Link } from 'next-view-transitions';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -76,74 +74,70 @@ export function BlogPageClient({
   };
 
   return (
-    <Container className="py-16">
-      <div className="space-y-8">
-        {/* Header */}
-        <div className="space-y-4 text-center">
-          <h1 className="text-4xl font-bold tracking-tight lg:text-5xl">
-            Blogs
-          </h1>
-          <p className="text-muted-foreground mx-auto max-w-2xl text-lg">
-            Thoughts, tutorials, and insights on engineering, and programming.
-          </p>
-        </div>
+    <Container className="py-12">
+      <section>
+        <h1 className="text-3xl font-semibold tracking-tight">Blog</h1>
+        <p className="text-secondary mt-2 max-w-2xl text-sm leading-6">
+          Notes on engineering, AI systems, frontend craft, and ideas worth
+          keeping around.
+        </p>
+      </section>
 
-        <Separator />
+      {initialTags.length > 0 ? (
+        <section className="mt-8">
+          <div className="flex flex-wrap items-center gap-2">
+            {initialTags.map((tag) => {
+              const postCount = getTagPostCount(tag);
+              const isSelected = selectedTag === tag;
 
-        {/* Tags */}
-        {initialTags.length > 0 && (
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold">Popular Tags</h2>
-              {selectedTag && (
+              return (
                 <button
-                  onClick={() => handleTagClick(selectedTag)}
-                  className="text-muted-foreground hover:text-foreground text-sm underline"
+                  key={tag}
+                  onClick={() => handleTagClick(tag)}
+                  className={`rounded-full border px-3 py-1.5 text-sm capitalize transition-colors ${
+                    isSelected
+                      ? 'bg-foreground text-background border-foreground'
+                      : 'text-secondary hover:text-foreground hover:bg-muted'
+                  }`}
                 >
-                  Clear filter
+                  {tag} ({postCount})
                 </button>
-              )}
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {initialTags.map((tag) => {
-                const postCount = getTagPostCount(tag);
-                const isSelected = selectedTag === tag;
-                return (
-                  <button
-                    key={tag}
-                    onClick={() => handleTagClick(tag)}
-                    className="transition-colors"
-                  >
-                    <Badge
-                      variant={isSelected ? 'default' : 'outline'}
-                      className="hover:bg-accent hover:text-accent-foreground tag-inner-shadow cursor-pointer capitalize"
-                    >
-                      {tag} ({postCount})
-                    </Badge>
-                  </button>
-                );
-              })}
-            </div>
+              );
+            })}
+            {selectedTag ? (
+              <button
+                onClick={() => handleTagClick(selectedTag)}
+                className="text-secondary hover:text-foreground ml-2 text-sm underline underline-offset-4"
+              >
+                Clear filter
+              </button>
+            ) : null}
           </div>
-        )}
+        </section>
+      ) : null}
 
-        {/* Blog Posts */}
-        <div className="space-y-6">
-          <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-semibold">
-              {selectedTag ? `Posts tagged "${selectedTag}"` : 'Latest Posts'}
-              {filteredPosts.length > 0 && (
-                <span className="text-muted-foreground ml-2 text-sm font-normal">
-                  ({filteredPosts.length}{' '}
-                  {filteredPosts.length === 1 ? 'post' : 'posts'})
-                </span>
-              )}
-            </h2>
-          </div>
-
-          <BlogList posts={filteredPosts} />
-        </div>
-      </div>
+      <section className="mt-10 divide-y">
+        {filteredPosts.map((post) => (
+          <article key={post.slug} className="py-5 first:pt-0 last:pb-0">
+            <Link href={`/blog/${post.slug}`} className="block hover:opacity-80">
+              <div className="grid gap-3 sm:grid-cols-[1fr_auto] sm:items-baseline">
+                <div>
+                  <h2 className="text-lg font-semibold">{post.frontmatter.title}</h2>
+                  <p className="text-secondary mt-1 text-sm leading-6">
+                    {post.frontmatter.description}
+                  </p>
+                  <div className="text-secondary mt-3 flex flex-wrap gap-2 text-xs uppercase tracking-wide">
+                    {post.frontmatter.tags.map((tag) => (
+                      <span key={`${post.slug}-${tag}`}>{tag}</span>
+                    ))}
+                  </div>
+                </div>
+                <p className="text-secondary text-sm">{post.frontmatter.date}</p>
+              </div>
+            </Link>
+          </article>
+        ))}
+      </section>
     </Container>
   );
 }
