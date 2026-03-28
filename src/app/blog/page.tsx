@@ -1,5 +1,4 @@
 import Container from '@/components/common/Container';
-import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
 import { generateMetadata as getMetadata } from '@/config/Meta';
 import { getAllTags, getPublishedBlogPosts } from '@/lib/blog';
@@ -29,38 +28,25 @@ export const generateMetadata = (): Metadata => {
 
 function BlogPageLoading() {
   return (
-    <Container className="py-16">
+    <Container className="py-12">
       <div className="space-y-8">
-        {/* Header Skeleton */}
-        <div className="space-y-4 text-center">
-          <Skeleton className="mx-auto h-12 w-32" />
-          <Skeleton className="mx-auto h-6 w-96" />
+        <div className="space-y-3">
+          <Skeleton className="h-10 w-28" />
+          <Skeleton className="h-5 w-96 max-w-full" />
         </div>
-
-        <Separator />
-
-        {/* Tags Skeleton */}
-        <div className="space-y-4">
-          <Skeleton className="h-6 w-32" />
-          <div className="flex flex-wrap gap-2">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <Skeleton key={i} className="h-8 w-20" />
-            ))}
-          </div>
+        <div className="flex flex-wrap gap-2">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <Skeleton key={i} className="h-9 w-24 rounded-full" />
+          ))}
         </div>
-
-        {/* Blog Posts Skeleton */}
-        <div className="space-y-6">
-          <Skeleton className="h-8 w-48" />
-          <div className="space-y-4">
-            {Array.from({ length: 3 }).map((_, i) => (
-              <div key={i} className="space-y-2">
-                <Skeleton className="h-6 w-3/4" />
-                <Skeleton className="h-4 w-1/2" />
-                <Skeleton className="h-4 w-2/3" />
-              </div>
-            ))}
-          </div>
+        <div className="space-y-5">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="space-y-2 border-b pb-5">
+              <Skeleton className="h-6 w-2/3" />
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-1/2" />
+            </div>
+          ))}
         </div>
       </div>
     </Container>
