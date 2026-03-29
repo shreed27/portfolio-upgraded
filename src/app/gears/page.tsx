@@ -1,6 +1,5 @@
 import Container from '@/components/common/Container';
 import Monitor from '@/components/svgs/devices/Monitor';
-import { Separator } from '@/components/ui/separator';
 import { devices, software, webExtensions } from '@/config/Gears';
 import { generateMetadata as getMetadata } from '@/config/Meta';
 import { ArrowUpRight, Puzzle } from 'lucide-react';
@@ -25,92 +24,75 @@ export const metadata: Metadata = {
 
 export default function GearsPage() {
   return (
-    <Container className="py-16">
-      <div className="space-y-8">
-        {/* Header */}
-        <div className="space-y-4 text-center">
-          <h1 className="text-4xl font-bold tracking-tight lg:text-5xl">
-            Gears
-          </h1>
-          <p className="text-muted-foreground mx-auto max-w-2xl text-lg">
-            My gears and tools i use to get my work done.
-          </p>
-        </div>
-        <Separator />
+    <Container className="py-12">
+      <section>
+        <h1 className="text-3xl font-semibold tracking-tight">Gears</h1>
+        <p className="text-secondary mt-2 max-w-2xl text-sm leading-6">
+          The devices, apps, and browser tools that make up my everyday setup.
+        </p>
+      </section>
 
-        {/* Devices Section */}
-        <div className="space-y-4">
-          <h2 className="text-2xl font-semibold">Devices</h2>
-          <div className="flex flex-col flex-wrap gap-4">
+      <section className="mt-10 grid gap-12">
+        <div>
+          <h2 className="text-lg font-semibold tracking-tight">Devices</h2>
+          <div className="mt-4 divide-y">
             {devices.map((device) => (
-              <div key={device.name} className="flex items-center gap-4">
-                <div className="bg-muted flex items-center justify-center rounded-md border border-black/10 p-2 text-[#736F70] dark:border-white/10">
+              <div key={device.name} className="flex items-center gap-4 py-4">
+                <div className="bg-muted text-secondary flex size-10 items-center justify-center rounded-xl border">
                   {device.icon}
                 </div>
-                <div className="flex flex-col">
-                  <h3 className="text-secondary text-sm">{device.name}</h3>
-                </div>
+                <p className="text-sm leading-6">{device.name}</p>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Web Extensions Section */}
-        <div className="space-y-4 pt-10">
-          <div className="flex items-center gap-4">
-            <div className="bg-muted flex items-center justify-center rounded-md border border-black/10 p-2 text-[#736F70] dark:border-white/10">
+        <div>
+          <div className="flex items-center gap-3">
+            <div className="bg-muted text-secondary flex size-10 items-center justify-center rounded-xl border">
               <Puzzle className="size-4" />
             </div>
-            <h2 className="text-2xl font-semibold">Web Extensions</h2>
+            <h2 className="text-lg font-semibold tracking-tight">Web Extensions</h2>
           </div>
-          <div className="mt-8 flex flex-col flex-wrap gap-4">
+          <div className="mt-4 divide-y">
             {webExtensions.map((extension, index) => (
-              <div key={extension.name} className="flex items-center gap-4">
-                <div className="flex items-center gap-2">
-                  <div className="bg-muted flex items-center justify-center rounded-md border border-black/10 px-2 py-1 text-[#736F70] dark:border-white/10">
-                    <span className="text-secondary text-sm">{index + 1}</span>
-                  </div>
-                  <h3 className="text-secondary ml-4 flex items-center gap-1 text-sm">
-                    <Link target="_blank" href={extension.href}>
-                      {extension.name}
-                    </Link>
-                    <ArrowUpRight className="size-4" />
-                  </h3>
-                </div>
-              </div>
+              <Link
+                key={extension.name}
+                target="_blank"
+                href={extension.href}
+                className="hover:bg-muted grid gap-2 py-4 transition-colors sm:grid-cols-[auto_1fr_auto] sm:items-center"
+              >
+                <span className="text-secondary text-sm">{index + 1}.</span>
+                <p className="text-sm">{extension.name}</p>
+                <ArrowUpRight className="text-secondary size-4" />
+              </Link>
             ))}
           </div>
         </div>
 
-        {/* Software Section */}
-        <div className="space-y-4 pt-10">
-          <div className="flex items-center gap-4">
-            <div className="bg-muted flex items-center justify-center rounded-md border border-black/10 p-2 text-[#736F70] dark:border-white/10">
+        <div>
+          <div className="flex items-center gap-3">
+            <div className="bg-muted text-secondary flex size-10 items-center justify-center rounded-xl border">
               <Monitor className="size-4" />
             </div>
-            <h2 className="text-2xl font-semibold">Software</h2>
+            <h2 className="text-lg font-semibold tracking-tight">Software</h2>
           </div>
-          <div className="mt-8 flex flex-col flex-wrap gap-4">
+          <div className="mt-4 divide-y">
             {software.map((app, index) => (
-              <div key={app.name} className="flex items-center gap-4">
-                <div className="flex items-center gap-2">
-                  <div className="bg-muted flex items-center justify-center rounded-md border border-black/10 px-2 py-1 text-[#736F70] dark:border-white/10">
-                    <span className="text-secondary text-sm">
-                      {(index + 1).toString()}
-                    </span>
-                  </div>
-                  <h3 className="text-secondary ml-4 flex items-center gap-1 text-sm">
-                    <Link target="_blank" href={app.href}>
-                      {app.name}
-                    </Link>
-                    <ArrowUpRight className="size-4" />
-                  </h3>
-                </div>
-              </div>
+              <Link
+                key={app.name}
+                target="_blank"
+                href={app.href}
+                className="hover:bg-muted grid gap-2 py-4 transition-colors sm:grid-cols-[auto_1fr_auto] sm:items-center"
+              >
+                <span className="text-secondary text-sm">{index + 1}.</span>
+                <p className="text-sm">{app.name}</p>
+                <ArrowUpRight className="text-secondary size-4" />
+              </Link>
             ))}
           </div>
         </div>
-      </div>
+      </section>
     </Container>
   );
 }
