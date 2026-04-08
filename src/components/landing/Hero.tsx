@@ -1,24 +1,14 @@
 import { heroConfig, skillComponents, socialLinks } from '@/config/Hero';
 import { parseTemplate } from '@/lib/hero';
-import { cn } from '@/lib/utils';
 import { Link } from 'next-view-transitions';
 import Image from 'next/image';
 import React from 'react';
 
-import Container from '../common/Container';
 import Skill from '../common/Skill';
-import CV from '../svgs/CV';
-import Chat from '../svgs/Chat';
-import { Button } from '../ui/button';
-import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
-
-const buttonIcons = {
-  CV: CV,
-  Chat: Chat,
-};
 
 export default function Hero() {
-  const { name, title, avatar, skills, description, buttons } = heroConfig;
+  const { name, title, subtitle, email, avatar, skills, description, nowPlaying } =
+    heroConfig;
 
   const renderDescription = () => {
     const parts = parseTemplate(description.template, skills);
@@ -50,67 +40,53 @@ export default function Hero() {
   };
 
   return (
-    <Container className="mx-auto max-w-5xl">
-      {/* Image */}
-      <Image
-        src={avatar}
-        alt="hero"
-        width={100}
-        height={100}
-        className="size-24 rounded-full bg-blue-300 dark:bg-yellow-300"
-      />
-
-      {/* Text Area */}
-      <div className="mt-8 flex flex-col gap-2">
-        <h1 className="text-4xl font-bold">
-          Hi, I&apos;m {name} — <span className="text-secondary">{title}</span>
-        </h1>
-
-        <div className="mt-4 flex flex-wrap items-center gap-x-1.5 gap-y-2 text-base whitespace-pre-wrap text-neutral-500 md:text-lg">
-          {renderDescription()}
+    <section className="mt-8">
+      <div className="flex items-start gap-4 sm:gap-5">
+        <Image
+          src={avatar}
+          alt={`${name} avatar`}
+          width={96}
+          height={96}
+          className="size-20 rounded-full border bg-blue-300 dark:bg-yellow-300"
+          priority
+        />
+        <div className="min-w-0 flex-1 pt-1">
+          <h1 className="text-3xl font-semibold tracking-tight">{name}</h1>
+          <div className="text-secondary mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm sm:text-base">
+            <span>{title}</span>
+            <span>·</span>
+            <span>{subtitle}</span>
+            <span>·</span>
+            <a href={`mailto:${email}`} className="hover:text-foreground transition-colors">
+              {email}
+            </a>
+          </div>
         </div>
       </div>
 
-      {/* Buttons */}
-      <div className="mt-8 flex gap-4">
-        {buttons.map((button, index) => {
-          const IconComponent =
-            buttonIcons[button.icon as keyof typeof buttonIcons];
-          return (
-            <Button
-              key={index}
-              variant={button.variant as 'outline' | 'default'}
-              className={cn(
-                button.variant === 'outline' && 'inset-shadow-indigo-500',
-                button.variant === 'default' && 'inset-shadow-indigo-500',
-              )}
-            >
-              {IconComponent && <IconComponent />}
-              <Link href={button.href}>{button.text}</Link>
-            </Button>
-          );
-        })}
+      <p className="text-secondary mt-6 max-w-2xl text-base leading-relaxed">
+        {renderDescription()}
+      </p>
+
+      <div className="text-secondary mt-5 flex flex-wrap items-center gap-2 text-sm">
+        <span className="text-base">◉</span>
+        <span className="font-medium">Last played</span>
+        <span>—</span>
+        <span>{nowPlaying}</span>
       </div>
 
-      {/* Social Links */}
-      <div className="mt-8 flex gap-2">
+      <div className="mt-4 flex flex-wrap items-center gap-3">
         {socialLinks.map((link) => (
-          <Tooltip key={link.name} delayDuration={0}>
-            <TooltipTrigger asChild>
-              <Link
-                href={link.href}
-                key={link.name}
-                className="text-secondary flex items-center gap-2"
-              >
-                <span className="size-6">{link.icon}</span>
-              </Link>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>{link.name}</p>
-            </TooltipContent>
-          </Tooltip>
+          <Link
+            href={link.href}
+            key={link.name}
+            className="text-secondary hover:text-foreground transition-colors"
+            aria-label={link.name}
+          >
+            <span className="block size-5 [&_svg]:size-5">{link.icon}</span>
+          </Link>
         ))}
       </div>
-    </Container>
+    </section>
   );
 }
