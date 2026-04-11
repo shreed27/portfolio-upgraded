@@ -2,8 +2,12 @@
 
 import { cn } from '@/lib/utils';
 import * as ScrollAreaPrimitive from '@radix-ui/react-scroll-area';
-import type Lenis from 'lenis';
 import * as React from 'react';
+
+type LenisLike = {
+  stop: () => void;
+  start: () => void;
+};
 
 function ScrollArea({
   className,
@@ -11,12 +15,20 @@ function ScrollArea({
   ...props
 }: React.ComponentProps<typeof ScrollAreaPrimitive.Root>) {
   const viewportRef = React.useRef<HTMLDivElement | null>(null);
-  const [lenisInstance, setLenisInstance] = React.useState<Lenis | null>(null);
+  const [lenisInstance, setLenisInstance] = React.useState<LenisLike | null>(
+    null,
+  );
 
   React.useEffect(() => {
-    type WindowWithLenis = Window & { lenis?: Lenis };
-    if (typeof window !== 'undefined' && (window as WindowWithLenis).lenis) {
-      setLenisInstance((window as WindowWithLenis).lenis!);
+    if (typeof window === 'undefined') return;
+
+    const maybeLenis = (window as unknown as { lenis?: unknown }).lenis;
+    if (
+      maybeLenis &&
+      typeof (maybeLenis as LenisLike).stop === 'function' &&
+      typeof (maybeLenis as LenisLike).start === 'function'
+    ) {
+      setLenisInstance(maybeLenis as LenisLike);
     }
   }, []);
 
