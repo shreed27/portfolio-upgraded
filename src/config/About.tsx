@@ -1,26 +1,28 @@
-import Bun from '@/components/technologies/Bun';
-import JavaScript from '@/components/technologies/JavaScript';
 import MongoDB from '@/components/technologies/MongoDB';
-import NextJs from '@/components/technologies/NextJs';
-import NodeJs from '@/components/technologies/NodeJs';
 import PostgreSQL from '@/components/technologies/PostgreSQL';
-import Prisma from '@/components/technologies/Prisma';
 import ReactIcon from '@/components/technologies/ReactIcon';
 import TypeScript from '@/components/technologies/TypeScript';
+import Python from '@/components/technologies/Python';
+import GCP from '@/components/technologies/GCP';
+import AWS from '@/components/technologies/AWS';
 
 export const mySkills = [
-  <ReactIcon key="react" />,
-  <Bun key="bun" />,
-  <JavaScript key="javascript" />,
+  <Python key="python" />,
   <TypeScript key="typescript" />,
-  <MongoDB key="mongodb" />,
-  <NextJs key="nextjs" />,
-  <NodeJs key="nodejs" />,
+  <ReactIcon key="react" />,
+  <GCP key="gcp" />,
+  <AWS key="aws" />,
   <PostgreSQL key="postgresql" />,
-  <Prisma key="prisma" />,
+  <MongoDB key="mongodb" />,
 ];
 
 export const about = {
-  name: 'Ramkrishna Swarnkar',
-  description: `I'm a Full Stack web developer and Open Source Contributor, I love building products to solve real-world problems. I'm specialized in building MVP's.`,
+  name: 'Shreed Shrivastava',
+  description: `I'm an AI Engineer and Quant Trader at the intersection of Market Microstructure and Agentic AI. I've engineered low-latency RAG systems and cloud-native NLP intelligence engines.
+
+My expertise includes:
+• **Languages**: Python, C++, SQL, Solidity.
+• **AI & ML**: RAG, LLMs, Computer Vision (OpenCV, OCR, Tesseract, TrOCR), Agentic AI, Langchain, HuggingFace, CrewAI, n8n.
+• **Quant & Trading**: HFT, Market Microstructure, Statistical Arbitrage, Portfolio Risk Management (Sharpe/Sortino, VaR modeling).
+• **Cloud & Systems**: GCP (Vertex AI, GKE, BigQuery), AWS, Firebase.`,
 };
