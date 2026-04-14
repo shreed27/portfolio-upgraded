@@ -1,5 +1,20 @@
 export const footerConfig = {
-  developer: 'Ramxcodes',
-  text: 'Design & Developed by',
+  developer: 'Shreed Shrivastava',
+  text: 'Inspired by ramx.in, built by',
   copyright: 'All rights reserved.',
+  visitorCount: '35,950th',
+  nav: [
+    { label: 'Home', href: '/' },
+    { label: 'Work', href: '/work-experience' },
+    { label: 'Blog', href: '/blog' },
+    { label: 'Resume', href: '/resume' },
+    { label: 'Projects', href: '/projects' },
+    { label: 'Gears', href: '/gears' },
+    { label: 'Setup', href: '/setup' },
+    { label: 'Terminal', href: '/setup' },
+    { label: 'Books', href: '/journey' },
+    { label: 'Movies', href: '/journey' },
+    { label: 'RSS Feed', href: '/blog' },
+    { label: 'Contact', href: '/contact' },
+  ],
 };
